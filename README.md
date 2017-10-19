@@ -8,6 +8,8 @@ More about Single Shot Detector: [Paper](http://arxiv.org/abs/1512.02325)
 
 More about Face Scrub dataset: [Site](http://www.vintage.winklerbros.net/facescrub.html)
 
+<img src="assets/example_detected.png" width=347 height=252 alt="example of detected faces" />
+
 ## Instructions
 
 Note: The Docker file contained below requires nvidia-docker and GPU resources enabled for CUDA. Training SSD to detect faces required approximately 3 days while running on 3 Nvidia Titan X GPUs in parallel. It will not work on CPUs. 
