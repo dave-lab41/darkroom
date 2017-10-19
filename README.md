@@ -8,7 +8,6 @@ More about Single Shot Detector: [Paper](http://arxiv.org/abs/1512.02325)
 
 More about Face Scrub dataset: [Site](http://www.vintage.winklerbros.net/facescrub.html)
 
-Sample Image from Trained SSD model
 <img src="assets/example_detected.png" width=347 height=252 alt="example of detected faces" />
 
 ## Instructions
