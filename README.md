@@ -43,7 +43,7 @@ You probably already know how to do this.
 
 ```git clone https://github.com/dave-lab41/darkroom.git```
 
-### 4. Install opencv and numpy dependencies
+### 4. Install opencv and numpy dependencies to process Face Scrub data files
 
 OpenCV can be frustrating to install. My preferred method is to install [Miniconda](https://conda.io/miniconda.html) and run
 
