@@ -134,7 +134,9 @@ Note: The command 'python examples/ssd/ssd_pascal.py' is configured to begin tra
 
 ### 10. Review the results
 
-When 120,000 iterations of training ends after a few days, you can test your model with the jupyter notebook 'examples/ssd/ssd_detect.ipynb' inside the container.
+When 120,000 iterations of training ends after a few days, an detection evaluation metric will be presented. In my experiments the scores were 0.77 (300x300 pixels) and 0.79 (450x450 pixels). The SSD [repository](https://github.com/weiliu89/caffe/tree/ssd) lists very similar detection evaluation scores. 
+
+You can also evaluate your model with the jupyter notebook 'examples/ssd/ssd_detect.ipynb' inside the container.
 
 First use a jupyter terminal to wget images from the internet that you would like to test for face detection. Alternatively, place images on your local computer in one of the local volumes mounted to the Docker container so the images can be accessed from inside the container
 
