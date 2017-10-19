@@ -10,11 +10,11 @@ More about Face Scrub dataset: [Site](http://www.vintage.winklerbros.net/facescr
 
 ## Instructions
 
-Note: The Docker file contained below requires nvidia-docker and GPU resources enabled for CUDA. Training SSD to detect faces required approximately 3 days while  runnin on 3 Titan X GPUs in parallel. It will not work on CPUs. 
+Note: The Docker file contained below requires nvidia-docker and GPU resources enabled for CUDA. Training SSD to detect faces required approximately 3 days while running on 3 Nvidia Titan X GPUs in parallel. It will not work on CPUs. 
 
 ###1. Obtain Face Scrub data files
 
-Complete the [form](http://form.jotform.me/form/43268445913460) found on the Face Scrub [site](http://www.vintage.winklerbros.net/facescrub.html) 
+Complete the [form](http://form.jotform.me/form/43268445913460) found on the Face Scrub [site](http://www.vintage.winklerbros.net/facescrub.html) to get access to the Face Scrub data files
 
 ###2. Obtain VGGNet model and the VOC2007/VOC2012 datasets
 
@@ -22,7 +22,7 @@ Follow steps 1 and 2 in the Preparation section of the SSD repository [site](htt
 
 1. Download [fully convolutional reduced (atrous) VGGNet](https://gist.github.com/weiliu89/2ed6e13bfd5b57cf81d6). Save the model on your computer inside a folder structure `models/VGGNet/`
 
-2. Download VOC2007 and VOC2012 dataset. Save the results in a folder on your computer named `data/`
+2. Download VOC2007 and VOC2012 dataset. Save the results in a folder on your computer named `VOCdata/`
   ```Shell
   # Download the data.
   cd $HOME/data
@@ -54,20 +54,20 @@ conda install numpy
 
 Create a directory (example: fscrub) on your computer and place the Face Scrub actor and actress files inside the directory.
 
-Navigate to the darkroom directory, view preprocess_facescrub.py and update the facescrub_folder variable on line 14 to the folder where you placed the Face Scrub files.
+Navigate to the darkroom directory, view preprocess_facescrub.py and update the facescrub_folder variable on line 14 to the folder where you placed the Face Scrub actor and actress files.
 
 Now run  
 
 ```Shell
 python preprocess_facescrub.py
 ``` 
-You will need at least 9000 Face Scrub images to insert into the VOC dataset. Ensure that at least 9000 files exist in the JPEGImages and Annotations folders by running
+You will need at least 9000 Face Scrub images to insert into the VOC dataset. This process can take an hour or longer, depending on network speed and the number of broken links in the Face Scrub data files. Ensure that at least 9000 files exist in the JPEGImages and Annotations folders by running this command in another terminal
 
 ```Shell
 ls -l /fscrub/JPEGImages/ | wc -1
 ```
 
-Note: preprocess_facescrub.py creates pairs of files in JPEGImages and Annotations. You can ensure that there are no orphan files by running
+Note: preprocess_facescrub.py creates pairs of files in JPEGImages and Annotations. If only one file of the pair exists, SSD training will fail. You can ensure that there are no orphan files by running
 
 ```Shell
 ls JPEGImages/ | sed 's/.jpg/''/g' > jpeg.txt
@@ -94,12 +94,12 @@ tar -xvf VOCtrainval_06-Nov-2007.tar
 tar -xvf VOCtest_06-Nov-2007.tar
 ```
 
-You can run preprocess_facescrub.py again to download more Face Scrub images
+You can run preprocess_facescrub.py again to download more Face Scrub images and then run merge_facescrub.py again
 
 
 ###7. Build the darkroom Docker container
 
-At this point you have replaced the "people" class in the original VOC data with a "face" class. The "face" class has been populated with the Face Scrub images you downloaded.
+At this point you have replaced the "people" class in the original VOC data with a "face" class. The "face" class has been populated throughout the VOC data with the Face Scrub images you downloaded.
 
 It's time to train SSD so build the container by running
 
@@ -113,11 +113,11 @@ Note: create_lmdb.sh in the darkroom repository is configured to start a jupyter
 
 nvidia-docker run -v /path/to/VOGGmodel/:/opt/caffe/models/VGGNet -v /path/to/VOCdata/:/root/data -p 8888:8888 vfs.retrain_ssd_gpu
 
-File processing will occur and a jupyter link will be presented at the end.
+File processing will occur and a jupyter link will be presented at the end
 
 ###9. Start training
 
-Open the jupyter link presented and start a new terminal. Run
+Open the jupyter link presented to open a jupyter browser session. In the upper right corner click the 'new' button to start a new terminal. Run
 
 ```Shell
 python examples/ssd/ssd_pascal.py
@@ -127,9 +127,9 @@ Note: The command 'python examples/ssd/ssd_pascal.py' is configured to begin tra
 
 ###10. Review the results
 
-When training ends after a few days, you can test your model with the jupyter notebook 'examples/ssd/ssd_detect.ipynb' inside the container.
+When 120,000 iterations of training ends after a few days, you can test your model with the jupyter notebook 'examples/ssd/ssd_detect.ipynb' inside the container.
 
-First use a jupyter terminal to wget images that you would like to test for face detection.
+First use a jupyter terminal to wget images from the internet that you would like to test for face detection. Alternatively, place images on your local computer in one of the local volumes mounted to the Docker container so the images can be accessed from inside the container
 
 Then set the model_weights variable in cell 2 of 'examples/ssd/ssd_detect.ipynb' to the location of your model, such as
 
