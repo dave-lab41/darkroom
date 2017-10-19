@@ -113,8 +113,11 @@ Note: create_lmdb.sh in the darkroom repository is configured to start a jupyter
 
 ### 8. Run the container
 
-nvidia-docker run -v /path/to/VOGGmodel/:/opt/caffe/models/VGGNet -v /path/to/VOCdata/:/root/data -p 8888:8888 vfs.retrain_ssd_gpu
+It's go time. Run
 
+```Shell
+nvidia-docker run -v /path/to/VOGGmodel/:/opt/caffe/models/VGGNet -v /path/to/VOCdata/:/root/data -p 8888:8888 vfs.retrain_ssd_gpu
+```
 File processing will occur and a jupyter link will be presented at the end
 
 ### 9. Start training
