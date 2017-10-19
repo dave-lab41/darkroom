@@ -118,7 +118,9 @@ It's go time. Run
 ```Shell
 nvidia-docker run -v /path/to/VOGGmodel/:/opt/caffe/models/VGGNet -v /path/to/VOCdata/:/root/data -p 8888:8888 vfs.retrain_ssd_gpu
 ```
-File processing will occur and a jupyter link will be presented at the end
+We are mounting two volumes into the Docker container. The first is the VGG model you downloaded and the second is the VOC data with the inserted Face Scrub images 
+
+VOC file processing will occur automatically and a jupyter link will be presented at the end
 
 ### 9. Start training
 
