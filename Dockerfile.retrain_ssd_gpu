@@ -1,0 +1,80 @@
+FROM nvidia/cuda:7.5-cudnn5-devel-ubuntu14.04 
+MAINTAINER caffe-maint@googlegroups.com
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        build-essential \
+        cmake \
+        git \
+        wget \
+        libatlas-base-dev \
+        libboost-all-dev \
+        libgflags-dev \
+        libgoogle-glog-dev \
+        libhdf5-serial-dev \
+        libleveldb-dev \
+        liblmdb-dev \
+        libopencv-dev \
+        libprotobuf-dev \
+        libsnappy-dev \
+        protobuf-compiler \
+        python-dev \
+        python-numpy \
+        python-pip \
+        python-scipy && \
+    rm -rf /var/lib/apt/lists/*
+
+ENV CAFFE_ROOT=/opt/caffe
+WORKDIR $CAFFE_ROOT
+
+# FIXME: clone a specific git tag and use ARG instead of ENV once DockerHub supports this.
+ENV CLONE_TAG=ssd
+
+RUN git clone -b ${CLONE_TAG} --depth 1 https://github.com/weiliu89/caffe.git . && \
+    for req in $(cat python/requirements.txt) pydot; do pip install $req; done 
+    #&& \
+    #mkdir build && cd build && \
+    #cmake -DUSE_CUDNN=1 .. && \
+    #make -j"$(nproc)"
+
+#RUN git clone -b ${CLONE_TAG} --depth 1 https://github.com/weiliu89/caffe.git . && \
+#    for req in $(cat python/requirements.txt) pydot; do pip install $req; done 
+
+ENV PYCAFFE_ROOT $CAFFE_ROOT/python
+ENV PYTHONPATH $PYCAFFE_ROOT:$PYTHONPATH
+ENV PATH $CAFFE_ROOT/build/tools:$PYCAFFE_ROOT:$PATH
+RUN echo "$CAFFE_ROOT/build/lib" >> /etc/ld.so.conf.d/caffe.conf && ldconfig
+    
+# Fold in makefile.config fixes to run on cpu
+COPY Makefile.config.gpu Makefile.config
+RUN make -j8 
+RUN make py 
+RUN make test -j8
+
+WORKDIR /opt/caffe/
+RUN pip install -U setuptools
+RUN pip install IPython==5.0 jupyter
+
+# Fix bad substitition error when running create_data.sh
+RUN sed -i 's/\${BASH_SOURCE\[0\]}/\$0/g' data/VOC0712/create_data.sh
+#RUN sed -i 's/\$(cd \$( dirname \${BASH_SOURCE\[0\]} ) \&\& pwd )/"\$(cd "\$(dirname "${BASH_SOURCE\[0\]}")" \&\& pwd)"/g' data/VOC0712/create_data.sh 
+
+# Fold in version of ssd_pascal modified for 450x450 input layer
+COPY ssd_pascal_xxx.py examples/ssd/ssd_pascal_xxx.py
+# Adjust gpu count to the number you have available. The default is four and I only have three.
+RUN sed -i 's/gpus = "0,1,2,3"/gpus = "0,1,2"/g' examples/ssd/ssd_pascal.py
+RUN sed -i 's/gpus = "0,1,2,3"/gpus = "0,1,2"/g' examples/ssd/ssd_pascal_xxx.py
+
+# Include force_color flag in ssd_pascal.py parameters to avoid coredump issue during training
+RUN sed -i 's/train_transform_param = {/train_transform_param = {"force_color": True,/g' examples/ssd/ssd_pascal.py
+RUN sed -i 's/test_transform_param = {/test_transform_param = {"force_color": True,/g' examples/ssd/ssd_pascal.py
+
+# Modify labelmap_voc.prototxt to replace 'person' label with 'face' label when retraining on faces
+RUN sed -i 's/person/face/g' data/VOC0712/labelmap_voc.prototxt
+
+# Pass in script to complete processing after data is mounted
+COPY create_lmdb.sh create_lmdb.sh
+RUN chmod a+wrx create_lmdb.sh
+
+EXPOSE 8888
+CMD ["./create_lmdb.sh"]
+
