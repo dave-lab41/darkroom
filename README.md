@@ -37,7 +37,7 @@ Follow steps 1 and 2 in the Preparation section of the SSD repository [site](htt
   tar -xvf VOCtest_06-Nov-2007.tar
   ```
 
-### 3. Git Clone the darkroom respository to your build the container
+### 3. Git Clone the darkroom Repository to your Computer
 
 You probably already know how to do this.
 
