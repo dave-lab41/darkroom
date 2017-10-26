@@ -1,6 +1,6 @@
 # darkroom
 
-Docker container to train Single Shot Multibox Detector (SSD) to detect faces using the Face Scrub dataset. 
+Docker container to train Single Shot Multibox Detector (SSD) on GPUs to detect faces using the Face Scrub dataset. 
 
 More about Single Shot Detector: [Paper](http://arxiv.org/abs/1512.02325)
 [Slides](http://www.cs.unc.edu/~wliu/papers/ssd_eccv2016_slide.pdf)
