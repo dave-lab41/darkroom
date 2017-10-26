@@ -12,16 +12,22 @@ More about Single Shot Detector: [Paper](http://arxiv.org/abs/1512.02325)
 In this example the tar file will be saved to the ~/models directory
 
 2. Untar the file at the terminal by running
-`tar -xvf SSD300x300.tar'
+```Shell
+tar -xvf SSD300x300.tar
+```
 
 ### build docker container
 
 At the terminal run the command
-`docker build -f Dockerfile.ssd_cpu -t darkroom.ssd_cpu .`
+```Shell
+docker build -f Dockerfile.ssd_cpu -t darkroom.ssd_cpu .
+```
 
 ### run the container
 
-`docker run -v ~/models:/opt/caffe/models/SSD/ -p 8888:8888 darkroom.ssd_cpu`
+```Shell
+docker run -v ~/models:/opt/caffe/models/SSD/ -p 8888:8888 darkroom.ssd_cpu
+```
 
 ### try out the ssd_detect notebook with the pretrained 300x300 model
 
@@ -39,15 +45,21 @@ At the terminal run the command
 
 2. Navigate to the examples/images folder
 
-`cd examples/images/`
+```Shell
+cd examples/images/
+```
 
 3. Use wget to  
 
-`wget [url]`
+```Shell
+wget [url]
+```
 
 4. Update cell 4 in the ssd_detect notebook with the name of the file you downloaded
 
-`example = 'examples/images/[downloadedFile].jpg'`
+```Shell
+example = 'examples/images/[downloadedFile].jpg'
+```
 
 ### get a different pretrained model
 
@@ -57,13 +69,17 @@ Expanding the input pixel size improves face detection results and you can compa
 In this example the tar file will be saved to the ~/models directory
 
 2. Untar the file at the terminal by running
-`tar -xvf SSD450x450.tar' 
+```Shell
+tar -xvf SSD450x450.tar
+```
 
 3. Change the first three lines of the ssd_detect.ipynb notebook to the following:
 
-`model_def = '/opt/caffe/models/SSD/SSD450/deploy.prototxt'
+```Shell
+model_def = '/opt/caffe/models/SSD/SSD450/deploy.prototxt'
 model_weights = '/opt/caffe/models/SSD/SSD450/VGG_VOC0712_SSD_450x450_iter_120000.caffemodel'
-image_resize = 450`
+image_resize = 450
+```
 
 4. Execute the notebook cells in order from the beginning by pressing the play button or Shift+Enter
 
