@@ -33,9 +33,9 @@ docker run -v ~/models:/opt/caffe/models/SSD/ -p 8888:8888 darkroom.ssd_cpu
 
 1. Open jupyter in your browser via the link provided in the docker container output.  
 
-2. Navigate to the 'examples' folder inside the jupyter web interface and open ssd_detect.ipynb notebook
+2. Navigate to the 'examples' folder inside the jupyter web interface and open ssd_detect.ipynb 
 
-3. Execute the notebook cells in order by pressing the play button or Shift+Enter
+3. When the notebook loads, execute the notebook cells in order by pressing the play button or Shift+Enter
 
 ## (Optional) Testing other Images and other Models
 
