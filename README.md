@@ -10,7 +10,11 @@ More about Face Scrub dataset: [Site](http://www.vintage.winklerbros.net/facescr
 
 <img src="assets/example_detected.png" width=347 height=252 alt="example of detected faces" />
 
-## Instructions
+## No GPU? Just want to play with models?
+
+You can test out two models I trained on the Face Scrub data set in the ssd_cpu [folder](https://github.com/dave-lab41/darkroom/ssd_cpu)
+
+## Instructions for Training A Model
 
 Note: The Docker file contained below requires nvidia-docker and GPU resources enabled for CUDA. Training SSD to detect faces required approximately 3 days while running on 3 Nvidia Titan X GPUs in parallel. It will not work on CPUs. 
 
@@ -106,7 +110,7 @@ At this point you have replaced the "people" class in the original VOC data with
 It's time to train SSD so build the container by running
 
 ```Shell
-docker build -f Dockerfile.retrain_ssd_gpu -t vfs.retrain_ssd_gpu .
+docker build -f Dockerfile.retrain_ssd_gpu -t darkroom.retrain_ssd_gpu .
 ```
 
 Note: create_lmdb.sh in the darkroom repository is configured to start a jupyter notebook session for you to kick off training from a terminal inside jupyter. If you prefer to execute training directly, comment out the Jupyter execution statement in create_lmdb.sh and uncomment the python script execution line in create_lmdb.sh before building the Docker container.
@@ -116,7 +120,7 @@ Note: create_lmdb.sh in the darkroom repository is configured to start a jupyter
 It's go time. Run
 
 ```Shell
-nvidia-docker run -v /path/to/VOGGmodel/:/opt/caffe/models/VGGNet -v /path/to/VOCdata/:/root/data -p 8888:8888 vfs.retrain_ssd_gpu
+nvidia-docker run -v /path/to/VOGGmodel/:/opt/caffe/models/VGGNet -v /path/to/VOCdata/:/root/data -p 8888:8888 darkroom.retrain_ssd_gpu
 ```
 We are mounting two volumes into the Docker container. The first is the VGG model you downloaded and the second is the VOC data with the inserted Face Scrub images 
 
