@@ -1,6 +1,6 @@
 # darkroom
 
-Docker container to train Single Shot Multibox Detector (SSD) on GPUs to detect faces using the Face Scrub dataset. 
+Docker container to train Single Shot Multibox Detector (SSD) on GPUs to detect faces using the Face Scrub dataset 
 
 More about Single Shot Detector: [Paper](http://arxiv.org/abs/1512.02325)
 [Slides](http://www.cs.unc.edu/~wliu/papers/ssd_eccv2016_slide.pdf)
@@ -49,7 +49,13 @@ You probably already know how to do this.
 
 ### 4. Install opencv and numpy dependencies to process Face Scrub data files
 
-OpenCV can be frustrating to install. My preferred method is to install [Miniconda](https://conda.io/miniconda.html) and run
+OpenCV can be frustrating to install. If you have pip, try
+
+```Shell
+pip install opencv-python
+pip install numpy
+```
+Another option would be to install [Miniconda](https://conda.io/miniconda.html) and run
 
 ```Shell
 conda install -c menpo opencv3
