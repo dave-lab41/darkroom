@@ -49,17 +49,20 @@ docker run -v ~/models:/opt/caffe/models/SSD/ -p 8888:8888 darkroom.ssd_cpu
 cd examples/images/
 ```
 
-3. Use wget to  
+3. Use wget to download images into the container from the internet. 
 
 ```Shell
 wget [url]
 ```
 
-4. Update cell 4 in the ssd_detect notebook with the name of the file you downloaded
+If you have images stored locally, you can add execute docker run from step 3 above with another local volume mount (ex: -v /localfolder/with/images:/opt/caffe/models/examples/images/test/)
+
+4. Update cell 4 in the ssd_detect notebook with the name of the file you downloaded. 
 
 ```Shell
 example = 'examples/images/[downloadedFile].jpg'
 ```
+Update the folder path if you mounted another local volume (ex: 'examples/images/test/[downloadedFile].jpg')
 
 ### get a different pretrained model
 
