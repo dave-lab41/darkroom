@@ -6,7 +6,7 @@ More about Single Shot Detector: [Paper](http://arxiv.org/abs/1512.02325)
 
 ## Object detector
 
-### get a pretrained model
+### 1. get a pretrained model
 
 1. Download a Caffe model with a 300x300 pixel input that was trained on the Face Scrub dataset [here](https://drive.google.com/file/d/0B5YNnW8pHPSWZDBhdWFIVHZMWVE/view?usp=sharing). 
 In this example the tar file will be saved to the ~/models directory
@@ -16,20 +16,20 @@ In this example the tar file will be saved to the ~/models directory
 tar -xvf SSD300x300.tar
 ```
 
-### build docker container
+### 2. build docker container
 
 At the terminal run the command
 ```Shell
 docker build -f Dockerfile.ssd_cpu -t darkroom.ssd_cpu .
 ```
 
-### run the container
+### 3. run the container
 
 ```Shell
 docker run -v ~/models:/opt/caffe/models/SSD/ -p 8888:8888 darkroom.ssd_cpu
 ```
 
-### try out the ssd_detect notebook with the pretrained 300x300 model
+### 4. try out the ssd_detect notebook with the pretrained 300x300 model
 
 1. Open jupyter in your browser via the link provided in the docker container output.  
 
