@@ -12,7 +12,7 @@ More about Face Scrub dataset: [Site](http://www.vintage.winklerbros.net/facescr
 
 ## No GPU? Just want to play with models?
 
-You can test out two models I trained on the Face Scrub data set in the ssd_cpu [folder](https://github.com/dave-lab41/darkroom/ssd_cpu)
+You can test out two models I trained on the Face Scrub data set in the ssd_cpu [folder](https://github.com/dave-lab41/darkroom/tree/master/ssd_cpu)
 
 ## Instructions for Training A Model
 
