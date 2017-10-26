@@ -6,9 +6,9 @@ More about Single Shot Detector: [Paper](http://arxiv.org/abs/1512.02325)
 
 ## Object detector
 
-### get a 300x300 pretrained model
+### get a pretrained model
 
-1. Download a 300x300 pixel Caffe model that was trained on the Face Scrub dataset [here](https://drive.google.com/file/d/0B5YNnW8pHPSWZDBhdWFIVHZMWVE/view?usp=sharing). 
+1. Download a Caffe model with a 300x300 pixel input that was trained on the Face Scrub dataset [here](https://drive.google.com/file/d/0B5YNnW8pHPSWZDBhdWFIVHZMWVE/view?usp=sharing). 
 In this example the tar file will be saved to the ~/models directory
 
 2. Untar the file at the terminal by running
@@ -49,7 +49,7 @@ At the terminal run the command
 
 `example = 'examples/images/[downloadedFile].jpg'`
 
-### get a 450x450 pretrained model
+### get a different pretrained model
 
 Expanding the input pixel size improves face detection results and you can compare results with a 450x450 model 
 
