@@ -35,7 +35,12 @@ docker run -v ~/models:/opt/caffe/models/SSD/ -p 8888:8888 darkroom.ssd_cpu
 
 2. Navigate to the 'examples' folder inside the jupyter web interface and open ssd_detect.ipynb 
 
+<img src="assets/darkroom_jupyter.png" width=299 height=480 alt="jupyter web interface" />
+
 3. When the notebook loads, execute the notebook cells in order by pressing the play button or Shift+Enter
+
+<img src="assets/ssd_cpu_detected.png" width=401 height=480 alt="example of detected faces" />
+
 
 ## (Optional) Testing other Images and other Models
 
